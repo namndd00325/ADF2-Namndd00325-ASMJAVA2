@@ -55,7 +55,16 @@ public class EmployeeController {
         }
 
         System.out.println("Please enter phone number:");
-        String phone = scanner.nextLine();
+        //------------------------Validate Phone Number----------
+        String phone;
+        while (true) {
+            phone = scanner.nextLine();
+            if (validate.valiPhoneNumber(phone)) {
+                break;
+            } else {
+                System.err.println("Incorrect Format Phone Number! Please enter +841xxxxxxxxx or +849xxxxxxxx:");
+            }
+        }
 
         System.out.println("Please enter address:");
         String address = scanner.nextLine();
@@ -74,86 +83,123 @@ public class EmployeeController {
     public void editEmployee() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the employee ID that you want to edit:");
-        int id = scanner.nextInt();
+        int id;
+        while (true) {
+            String stringId = scanner.nextLine();
+            try {
+                id = Integer.parseInt(stringId);
+                if (id > 0) {
+                    Employee oldEmployee = employeeModel.getById(id);
+                    if (oldEmployee != null) {
+                        System.out.println("===========Information Employee==============");
+                        System.out.println("ID: " + oldEmployee.getId());
+                        System.out.println("Name: " + oldEmployee.getName());
+                        System.out.println("Birthday: " + oldEmployee.getBirthday());
+                        System.out.println("Email: " + oldEmployee.getEmmail());
+                        System.out.println("Phone Number: " + oldEmployee.getPhoneNumber());
+                        System.out.println("Address: " + oldEmployee.getAddress());
 
-        //check và tìm nhân viên theo id, sửa thông tin
-        Employee oldEmployee = employeeModel.getById(id);
-        if (oldEmployee != null) {
-            System.out.println("===========Information Employee==============");
-            System.out.println("ID: " + oldEmployee.getId());
-            System.out.println("Name: " + oldEmployee.getName());
-            System.out.println("Birthday: " + oldEmployee.getBirthday());
-            System.out.println("Email: " + oldEmployee.getEmmail());
-            System.out.println("Phone Number: " + oldEmployee.getPhoneNumber());
-            System.out.println("Address: " + oldEmployee.getAddress());
+                        System.out.println("Please enter new name (Press enter for skip): ");
+                        scanner.nextLine();
+                        String name = scanner.nextLine();
+                        if (name.isEmpty()) {
+                            name = oldEmployee.getName();
+                        }
 
-            System.out.println("Please enter new name (Press enter for skip): ");
-            scanner.nextLine();
-            String name = scanner.nextLine();
-            if (name.isEmpty()) {
-                name = oldEmployee.getName();
-            }
+                        System.out.println("Please enter new birthday (Press enter for skip): ");
+                        String birthday = scanner.nextLine();
+                        if (birthday.isEmpty()) {
+                            birthday = oldEmployee.getBirthday();
+                        }
 
-            System.out.println("Please enter new birthday (Press enter for skip): ");
-            String birthday = scanner.nextLine();
-            if (birthday.isEmpty()) {
-                birthday = oldEmployee.getBirthday();
-            }
+                        System.out.println("Please enter new email (Press enter for skip): ");
+                        //--------------------Validate Email--------------------
+                        String email;
+                        while (true) {
+                            email = scanner.nextLine();
+                            if (email.isEmpty()) {
+                                email = oldEmployee.getEmmail();
+                                break;
+                            } else if (validate.valiEmail(email)) {
+                                break;
+                            } else {
+                                System.err.println("Incorrect Format Email! Please enter email:");
+                            }
 
-            System.out.println("Please enter new email (Press enter for skip): ");
-            //--------------------Validate Email--------------------
-            String email;
-            while (true) {
-                email = scanner.nextLine();
-                if (email.isEmpty()) {
-                    email = oldEmployee.getEmmail();
-                    if (validate.valiEmail(email)) {
+                        }
+
+                        System.out.println("Please enter new phone number (Press enter for skip): ");
+                        //---------------------Validate Phone Number--------------------
+                        String phoneNumber;
+                        while (true) {
+                            phoneNumber = scanner.nextLine();
+                            if (phoneNumber.isEmpty()) {
+                                phoneNumber = oldEmployee.getPhoneNumber();
+                                break;
+                            } else if (validate.valiPhoneNumber(phoneNumber)) {
+                                break;
+                            } else {
+                                System.err.println("Incorrect Format Phone Number! Please enter +841xxxxxxxxx or +849xxxxxxxx:");
+                            }
+
+                        }
+
+                        System.out.println("Please enter new address (Press enter for skip): ");
+                        String address = scanner.nextLine();
+                        if (address.isEmpty()) {
+                            address = oldEmployee.getAddress();
+                        }
+
+                        Employee newEmployee = new Employee(oldEmployee.getId(), name, birthday, email, phoneNumber, address);
+                        employeeModel.updateEmployee(newEmployee);
                         break;
                     } else {
-                        System.err.println("Incorrect Format Email! Please enter email:");
+                        System.err.println("Not Found!");
                     }
+                } else {
+                    System.err.println("Not Found! Please enter ID: ");
                 }
-
+            } catch (Exception e) {
+                System.err.println("Plese enter number ID: ");
             }
-
-            System.out.println("Please enter new phone number (Press enter for skip): ");
-            String phoneNumber = scanner.nextLine();
-            if (phoneNumber.isEmpty()) {
-                phoneNumber = oldEmployee.getPhoneNumber();
-            }
-
-            System.out.println("Please enter new address (Press enter for skip): ");
-            String address = scanner.nextLine();
-            if (address.isEmpty()) {
-                address = oldEmployee.getAddress();
-            }
-
-            Employee newEmployee = new Employee(oldEmployee.getId(), name, birthday, email, phoneNumber, address);
-            employeeModel.updateEmployee(newEmployee);
-        } else {
-            System.out.println("Not Found!");
         }
 
+        //check và tìm nhân viên theo id, sửa thông tin
     }
 
     public void deleteEmployee() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the employee ID that you want to delete:");
-        int id = scanner.nextInt();
+        //--------------------------check ID----------------------------
+        int id;
+        while (true) {
+            String stringId = scanner.nextLine();
+            try {
+                id = Integer.parseInt(stringId);
+                if (id > 0) {
+                    Employee employee = employeeModel.getById(id);
+                    if (employee != null) {
+                        System.out.println("===========Information Employee==============");
+                        System.out.println("ID: " + employee.getId());
+                        System.out.println("Name: " + employee.getName());
+                        System.out.println("Birthday: " + employee.getBirthday());
+                        System.out.println("Email: " + employee.getEmmail());
+                        System.out.println("Phone Number: " + employee.getPhoneNumber());
+                        System.out.println("Address: " + employee.getAddress());
 
-        Employee employee = employeeModel.getById(id);
-        if (employee != null) {
-            System.out.println("===========Information Employee==============");
-            System.out.println("ID: " + employee.getId());
-            System.out.println("Name: " + employee.getName());
-            System.out.println("Birthday: " + employee.getBirthday());
-            System.out.println("Email: " + employee.getEmmail());
-            System.out.println("Phone Number: " + employee.getPhoneNumber());
-            System.out.println("Address: " + employee.getAddress());
+                        employeeModel.deleteEmployee(id);
+                        break;
+                    } else {
+                        System.err.println("Not Found!");
+                    }
+                } else {
+                    System.err.println("Not Found! Please enter ID:");
+                }
 
-            employeeModel.deleteEmployee(id);
-        } else {
-            System.out.println("Not Found!");
+            } catch (Exception e) {
+                System.err.println("Please enter number ID: ");
+            }
+
         }
 
     }

@@ -21,5 +21,5 @@ public class ADF2Assignment {
         MenuConsole menu = new MenuConsole();
         menu.creatMenu();
     }
-    
+
 }

@@ -14,11 +14,17 @@ import java.util.regex.Pattern;
  */
 public class Validate {
 
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX
-            = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final String phoneRegex = "^\\+84(1\\d{9}|9\\d{8})$";
 
     public static boolean valiEmail(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
+        Matcher matcher = emailRegex.matcher(emailStr);
+        return matcher.matches();
+    }
+
+    public static boolean valiPhoneNumber(String phone) {
+        Pattern pattern = Pattern.compile(phoneRegex);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
     }
 }
