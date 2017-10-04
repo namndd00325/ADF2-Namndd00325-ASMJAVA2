@@ -48,7 +48,6 @@ public class AddEmployee extends JFrame {
     private JLabel lblEmailMessage;
     private JLabel lblBirthdayMessage;
 
-   
     public AddEmployee() {
         this.setTitle("Add Employee");
         this.setSize(800, 600);
@@ -143,7 +142,7 @@ public class AddEmployee extends JFrame {
                 int confirm = JOptionPane.showConfirmDialog(null, "Do you want to insert employee?");
                 if (confirm == 0) {
                     empModel.insertEmployee(emp);
-                    JOptionPane.showMessageDialog(null, "Insert data succsess!");
+                    JOptionPane.showMessageDialog(null, "Insert data success!");
                     txtName.setText("");
                     txtDate.setText("");
                     txtEmail.setText("");
@@ -153,7 +152,6 @@ public class AddEmployee extends JFrame {
                 }
             } else {
                 showError(errors);
-
             }
         }
     }

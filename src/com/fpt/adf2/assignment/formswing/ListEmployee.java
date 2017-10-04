@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListEmployee extends JFrame {
 
     private JTable table;
-    private  Employee emp;
+    private Employee emp;
 
     EmployeeModel empModel = new EmployeeModel();
     ArrayList<Employee> list = empModel.getList();
@@ -81,7 +81,5 @@ public class ListEmployee extends JFrame {
 
         }
     }
-
-    
 
 }

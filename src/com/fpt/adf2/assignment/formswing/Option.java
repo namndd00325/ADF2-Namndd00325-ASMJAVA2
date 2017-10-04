@@ -60,7 +60,7 @@ public class Option extends JFrame {
         this.add(edit);
         this.add(delete);
         add(new JScrollPane(table));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         getEmp = emp;
     }
@@ -70,22 +70,25 @@ public class Option extends JFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             EditEmployee editEmp = new EditEmployee(getEmp);
-           
+
         }
     }
 
     class DeleteHandle implements ActionListener {
-       private Employee emp; // null
-       public DeleteHandle(Employee emp){
-       this.emp = emp;
-       }
+
+        private Employee emp; 
+
+        public DeleteHandle(Employee emp) {
+            this.emp = emp;
+        }
         EmployeeModel empModel = new EmployeeModel();
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             int confirm = JOptionPane.showConfirmDialog(null, "Do you want to delete employee?");
             if (confirm == 0) {
-                 empModel.deleteEmployee(emp.getId());
+                empModel.deleteEmployee(emp.getId());
+                JOptionPane.showMessageDialog(null, "Delete success!");
             }
         }
 

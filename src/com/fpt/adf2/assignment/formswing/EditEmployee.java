@@ -47,7 +47,7 @@ public class EditEmployee extends JFrame {
     private JLabel lblBirthdayMessage;
 
     public EditEmployee(Employee oldEmp) {
-        // cái jframe mà lấy ra 1 tahwngf employee cho nao?
+        
         this.setTitle("Edit Employee");
         this.setSize(800, 600);
 
@@ -118,8 +118,6 @@ public class EditEmployee extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
-    
-    
 
     public void resetMessage() {
         lblTotalMessage.setText("");
@@ -128,7 +126,6 @@ public class EditEmployee extends JFrame {
         lblPhoneMessage.setText("");
         lblEmailMessage.setText("");
         lblBirthdayMessage.setText("");
-
     }
 
     public void showError(HashMap<String, String> errors) {
@@ -170,17 +167,16 @@ public class EditEmployee extends JFrame {
             lblBirthdayMessage.setForeground(Color.green);
             lblBirthdayMessage.setText("Correct!");
         }
-
     }
 
     class UpdateHandle implements ActionListener {
+
         private Employee oldEmp;
 
         public UpdateHandle(Employee oldEmp) {
             this.oldEmp = oldEmp;
         }
-        
-       
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             Employee emp = new Employee();
@@ -191,15 +187,15 @@ public class EditEmployee extends JFrame {
             emp.setEmmail(txtEmail.getText());
             emp.setPhoneNumber(txtPhone.getText());
             emp.setAddress(txtAddress.getText());
-            
+
             HashMap<String, String> errors = new ValidateEdit().validateEditEmp(emp);
             if (errors.size() == 0) {
                 resetMessage();
-                
+
                 int confirm = JOptionPane.showConfirmDialog(null, "Do you want to update employee?");
                 if (confirm == 0) {
                     empModel.updateEmployee(emp);
-                    JOptionPane.showMessageDialog(null, "Update data succsess!");
+                    JOptionPane.showMessageDialog(null, "Update data success!");
                     txtName.setText("");
                     txtDate.setText("");
                     txtEmail.setText("");
@@ -209,9 +205,7 @@ public class EditEmployee extends JFrame {
                 }
             } else {
                 showError(errors);
-
             }
         }
     }
-
 }
